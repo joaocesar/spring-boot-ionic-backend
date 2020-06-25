@@ -1,5 +1,6 @@
 package com.nelioalves.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nelioalves.cursomc.domain.enums.TipoCliente;
 
 import javax.persistence.CollectionTable;
@@ -25,7 +26,8 @@ public class Cliente  implements Serializable {
     private String nome;
     private String email;
     private String cpfOuCnpj;
-    private Integer tipo;
+    private TipoCliente tipo;
+    @JsonManagedReference
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos;
     @ElementCollection
@@ -40,7 +42,7 @@ public class Cliente  implements Serializable {
         this.nome = nome;
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
-        this.tipo = tipo.getCodigo();
+        this.tipo = tipo;
     }
 
     public Integer getId() {
@@ -76,11 +78,11 @@ public class Cliente  implements Serializable {
     }
 
     public TipoCliente getTipo() {
-        return TipoCliente.of(tipo);
+        return tipo;
     }
 
     public void setTipo(TipoCliente tipo) {
-        this.tipo = tipo.getCodigo();
+        this.tipo = tipo;
     }
 
     public List<Endereco> getEnderecos() {
