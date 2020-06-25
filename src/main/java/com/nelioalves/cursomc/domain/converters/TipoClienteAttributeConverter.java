@@ -6,7 +6,7 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter(autoApply = true)
-public class TipoClienteConverter implements AttributeConverter<TipoCliente, Integer> {
+public class TipoClienteAttributeConverter implements AttributeConverter<TipoCliente, Integer> {
 
     @Override
     public Integer convertToDatabaseColumn(TipoCliente tipoCliente) {
