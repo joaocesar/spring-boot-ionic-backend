@@ -1,5 +1,7 @@
 package com.nelioalves.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -13,6 +15,7 @@ public class ItemPedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @JsonIgnore
     @EmbeddedId
     private ItemPedidoPK id;
     private BigDecimal desconto;
@@ -37,6 +40,7 @@ public class ItemPedido implements Serializable {
         this.id = id;
     }
 
+    @JsonIgnore
     public Pedido getPedido() {
         return this.getId().getPedido();
     }
