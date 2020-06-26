@@ -1,6 +1,6 @@
 package com.nelioalves.cursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +21,7 @@ public class Estado implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "estado")
     private List<Cidade> cidades;
 
