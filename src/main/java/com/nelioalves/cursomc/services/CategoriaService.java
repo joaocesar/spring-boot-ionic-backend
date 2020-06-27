@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,5 +39,9 @@ public class CategoriaService {
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityException("Não é possível excluir uma categora que possui produtos");
         }
+    }
+
+    public List<Categoria> findAll() {
+        return repository.findAll();
     }
 }
