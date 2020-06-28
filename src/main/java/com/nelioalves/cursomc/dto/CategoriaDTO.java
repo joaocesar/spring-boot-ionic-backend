@@ -42,4 +42,5 @@ public class CategoriaDTO implements Serializable {
     public Categoria toEntity() {
         return new Categoria(this.id, this.nome);
     }
+
 }

@@ -41,6 +41,7 @@ public class CategoriaResource {
 				.toUri();
 		return ResponseEntity.created(uri).build();
 	}
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody CategoriaDTO categoriaDTO) {
 		categoriaDTO.setId(id);

@@ -2,6 +2,8 @@ package com.nelioalves.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nelioalves.cursomc.domain.enums.TipoCliente;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -16,6 +18,8 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@DynamicInsert
+@DynamicUpdate
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,14 +31,18 @@ public class Cliente implements Serializable {
     private String email;
     private String cpfOuCnpj;
     private TipoCliente tipo;
+
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos;
+
     @ElementCollection
     @CollectionTable(name = "TELEFONE")
     private Set<String> telefones = new HashSet<>();
+
     @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos;
+
     public Cliente() {
     }
 
