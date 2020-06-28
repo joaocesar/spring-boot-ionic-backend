@@ -2,7 +2,9 @@ package com.nelioalves.cursomc.services;
 
 import com.nelioalves.cursomc.domain.Cliente;
 import com.nelioalves.cursomc.domain.Cliente;
+import com.nelioalves.cursomc.domain.Endereco;
 import com.nelioalves.cursomc.repositories.ClienteRepository;
+import com.nelioalves.cursomc.repositories.EnderecoRepository;
 import com.nelioalves.cursomc.services.exceptions.DataIntegrityException;
 import com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +23,18 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repository;
 
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+
     public Cliente find(Integer id) {
         Optional<Cliente> Cliente = repository.findById(id);
         return Cliente.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
     }
 
     public Cliente insert(Cliente cliente) {
-        return repository.save(cliente);
+        Cliente clienteSaved = repository.save(cliente);
+        enderecoRepository.saveAll(cliente.getEnderecos());
+        return clienteSaved;
     }
 
     public Cliente update(Cliente cliente) {
