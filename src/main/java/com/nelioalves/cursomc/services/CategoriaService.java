@@ -31,7 +31,8 @@ public class CategoriaService {
     }
 
     public Categoria update(Categoria categoria) {
-        find(categoria.getId());
+        Categoria categoriaToSave = find(categoria.getId());
+        updateCategoria(categoriaToSave, categoria);
         return repository.save(categoria);
     }
 
@@ -52,4 +53,9 @@ public class CategoriaService {
         PageRequest pageRequest = PageRequest.of(page,linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return repository.findAll(pageRequest);
     }
+
+    private void updateCategoria(Categoria categoriaToSave, Categoria categoria) {
+        categoriaToSave.setNome(categoria.getNome());
+    }
+
 }
