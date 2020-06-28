@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,9 +29,17 @@ public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(length = 120, nullable = false)
     private String nome;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(length = 14, nullable = false)
     private String cpfOuCnpj;
+
+    @Column(nullable = false)
     private TipoCliente tipo;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
