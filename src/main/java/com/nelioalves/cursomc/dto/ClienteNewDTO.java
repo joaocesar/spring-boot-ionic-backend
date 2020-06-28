@@ -4,28 +4,49 @@ import com.nelioalves.cursomc.domain.Cidade;
 import com.nelioalves.cursomc.domain.Cliente;
 import com.nelioalves.cursomc.domain.Endereco;
 import com.nelioalves.cursomc.domain.enums.TipoCliente;
+import com.nelioalves.cursomc.services.validation.ClienteInsert;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @NotEmpty(message = "Preenchimento obratório.")
+    @Length(min = 5, max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres.")
     private String nome;
+
+    @NotEmpty(message = "Preenchimento obratório.")
+    @Email(message = "Email Inválido")
     private String email;
+
+    @NotEmpty(message = "Preenchimento obratório.")
     private String cpfOuCnpj;
+
     private Integer tipo;
 
+    @NotEmpty(message = "Preenchimento obratório.")
     private String logradouro;
+
+    @NotEmpty(message = "Preenchimento obratório.")
     private String numero;
+
     private String complemento;
     private String bairro;
+
+    @NotEmpty(message = "Preenchimento obratório.")
     private String cep;
 
+    @NotEmpty(message = "Preenchimento obratório.")
     private String telefone1;
+
     private String telefone2;
     private String telefone3;
 
