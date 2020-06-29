@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.BitSet;
 import java.util.Objects;
 
 @Entity
@@ -71,6 +72,10 @@ public class ItemPedido implements Serializable {
 
     public void setPreco(BigDecimal preco) {
         this.preco = preco;
+    }
+
+    public BigDecimal getSubTotal() {
+        return preco.subtract(desconto).multiply(new BigDecimal(quantidade));
     }
 
     @Override

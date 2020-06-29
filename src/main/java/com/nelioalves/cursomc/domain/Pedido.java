@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
@@ -99,6 +100,9 @@ public class Pedido implements Serializable {
         this.itens = itens;
     }
 
+    public BigDecimal getValorTotal() {
+        return itens.stream().map(ItemPedido::getSubTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
