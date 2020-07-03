@@ -24,6 +24,7 @@ public class ItemPedido implements Serializable {
     private BigDecimal preco;
 
     public ItemPedido() {
+        this.id = new ItemPedidoPK();
     }
 
     public ItemPedido(Pedido pedido, Produto produto, BigDecimal desconto, Integer quantidade, BigDecimal preco) {
@@ -46,8 +47,16 @@ public class ItemPedido implements Serializable {
         return this.getId().getPedido();
     }
 
+    public void setPedido(Pedido pedido) {
+        this.id.setPedido(pedido);
+    }
+
     public Produto getProduto() {
         return this.getId().getProduto();
+    }
+
+    public void setProduto(Produto produto) {
+        this.id.setProduto(produto);
     }
 
     public BigDecimal getDesconto() {

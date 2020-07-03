@@ -79,17 +79,17 @@ public class CursomcApplication implements CommandLineRunner {
 		Categoria cat9 = new Categoria(null, "Utilidades");
 		Categoria cat10 = new Categoria(null, "Diversos");
 
-		Produto prod1 = new Produto(null, "Computador", 2000.00);
-		Produto prod2 = new Produto(null, "Impressora", 800.00);
-		Produto prod3 = new Produto(null, "Mouse", 80.00);
-		Produto prod4 = new Produto(null, "Mesa de escritório", 300.00);
-		Produto prod5 = new Produto(null, "Toalha", 50.00);
-		Produto prod6 = new Produto(null, "Colcha", 200.00);
-		Produto prod7 = new Produto(null, "TV True Color", 1200.00);
-		Produto prod8 = new Produto(null, "Roçadeira", 800.00);
-		Produto prod9 = new Produto(null, "Abajour", 100.00);
-		Produto prod10 = new Produto(null, "Pendente", 180.00);
-		Produto prod11 = new Produto(null, "Porta Shampoo", 90.00);
+		Produto prod1 = new Produto(null, "Computador", new BigDecimal("2000.00"));
+		Produto prod2 = new Produto(null, "Impressora", new BigDecimal("800.00"));
+		Produto prod3 = new Produto(null, "Mouse", new BigDecimal("80.00"));
+		Produto prod4 = new Produto(null, "Mesa de escritório", new BigDecimal("300.00"));
+		Produto prod5 = new Produto(null, "Toalha", new BigDecimal("50.00"));
+		Produto prod6 = new Produto(null, "Colcha", new BigDecimal("200.00"));
+		Produto prod7 = new Produto(null, "TV True Color", new BigDecimal("1200.00"));
+		Produto prod8 = new Produto(null, "Roçadeira", new BigDecimal("800.00"));
+		Produto prod9 = new Produto(null, "Abajour", new BigDecimal("100.00"));
+		Produto prod10 = new Produto(null, "Pendente", new BigDecimal("180.00"));
+		Produto prod11 = new Produto(null, "Porta Shampoo", new BigDecimal("90.00"));
 
 		cat1.getProdutos().addAll(Arrays.asList(prod1, prod2, prod3));
 		cat2.getProdutos().addAll(Arrays.asList(prod2, prod4));

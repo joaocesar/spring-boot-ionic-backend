@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Produto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-    private Double preco;
+    private BigDecimal preco;
     @JsonIgnore
     @ManyToMany
     @JoinTable(
@@ -46,7 +47,7 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(Integer id, String nome, Double preco) {
+    public Produto(Integer id, String nome, BigDecimal preco) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
@@ -68,11 +69,11 @@ public class Produto implements Serializable {
         this.nome = nome;
     }
 
-    public Double getPreco() {
+    public BigDecimal getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(BigDecimal preco) {
         this.preco = preco;
     }
 
