@@ -7,8 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.BitSet;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 @Entity
 @Table(name = "ITEM_PEDIDO")
@@ -98,5 +101,18 @@ public class ItemPedido implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+        final StringBuilder sb = new StringBuilder();
+        sb.append(getProduto().getNome());
+        sb.append(", Desconto: ").append(desconto);
+        sb.append(", Quantidade: ").append(quantidade);
+        sb.append(", Preco: ").append(nf.format(preco));
+        sb.append(", Sub-total: ").append(nf.format(getSubTotal()));
+        sb.append('\n');
+        return sb.toString();
     }
 }
