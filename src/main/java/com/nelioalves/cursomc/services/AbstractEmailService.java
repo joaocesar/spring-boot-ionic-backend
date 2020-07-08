@@ -21,8 +21,8 @@ public abstract class AbstractEmailService implements EmailService {
     @Autowired
     private TemplateEngine templateEngine;
 
-    @Autowired
-    private JavaMailSender javaMailSender;
+//    @Autowired
+//    private JavaMailSender javaMailSender;
 
     @Override
     public void sendOrderConfirmationEmail(Pedido pedido) {
@@ -40,32 +40,32 @@ public abstract class AbstractEmailService implements EmailService {
         return simpleMailMessage;
     }
 
-    protected String htmlFromTemplatePedido(Pedido pedido) {
-        Context context = new Context();
-        context.setVariable("pedido", pedido);
-        return templateEngine.process("email/confirmacaoPedido", context);
-    }
+//    protected String htmlFromTemplatePedido(Pedido pedido) {
+//        Context context = new Context();
+//        context.setVariable("pedido", pedido);
+//        return templateEngine.process("email/confirmacaoPedido", context);
+//    }
 
-    @Override
-    public void sendOrderConfirmationHtmlEmail(Pedido pedido)  {
-        MimeMessage mimeMessage = null;
-        try {
-            mimeMessage = prepareMimeMessageFromPedido(pedido);
-            sendHtmlEmail(mimeMessage);
-        } catch (MessagingException e) {
-            sendOrderConfirmationEmail(pedido);
-        }
-    }
+    //@Override
+//    public void sendOrderConfirmationHtmlEmail(Pedido pedido)  {
+//        MimeMessage mimeMessage = null;
+//        try {
+//            mimeMessage = prepareMimeMessageFromPedido(pedido);
+//            sendHtmlEmail(mimeMessage);
+//        } catch (MessagingException e) {
+//            sendOrderConfirmationEmail(pedido);
+//        }
+//    }
 
-    protected MimeMessage prepareMimeMessageFromPedido(Pedido pedido) throws MessagingException {
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-        helper.setTo(pedido.getCliente().getEmail());
-        helper.setFrom(sender);
-        helper.setSubject("Pedido Confirmado. Codigo: " + pedido.getId());
-        helper.setSentDate(new Date(System.currentTimeMillis()));
-        helper.setText(htmlFromTemplatePedido(pedido), true);
-        return  mimeMessage;
-    }
+//    protected MimeMessage prepareMimeMessageFromPedido(Pedido pedido) throws MessagingException {
+//        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+//        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+//        helper.setTo(pedido.getCliente().getEmail());
+//        helper.setFrom(sender);
+//        helper.setSubject("Pedido Confirmado. Codigo: " + pedido.getId());
+//        helper.setSentDate(new Date(System.currentTimeMillis()));
+//        helper.setText(htmlFromTemplatePedido(pedido), true);
+//        return  mimeMessage;
+//    }
 
 }
