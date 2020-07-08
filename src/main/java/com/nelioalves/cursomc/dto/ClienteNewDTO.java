@@ -33,6 +33,9 @@ public class ClienteNewDTO implements Serializable {
     private Integer tipo;
 
     @NotEmpty(message = "Preenchimento obratório.")
+    private String senha;
+
+    @NotEmpty(message = "Preenchimento obratório.")
     private String logradouro;
 
     @NotEmpty(message = "Preenchimento obratório.")
@@ -85,6 +88,14 @@ public class ClienteNewDTO implements Serializable {
 
     public void setTipo(Integer tipo) {
         this.tipo = tipo;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public String getLogradouro() {
@@ -160,7 +171,7 @@ public class ClienteNewDTO implements Serializable {
     }
 
     public Cliente toEntity() {
-        Cliente cliente = new Cliente(null, nome, email, cpfOuCnpj, TipoCliente.of(tipo));
+        Cliente cliente = new Cliente(null, nome, email, cpfOuCnpj, TipoCliente.of(tipo), senha);
         Cidade cidade = new Cidade(getCidadeId(), null, null);
         Endereco endereco = new Endereco(null, logradouro, numero, complemento, bairro, cep, cliente, cidade);
         cliente.setEnderecos(Arrays.asList(endereco));

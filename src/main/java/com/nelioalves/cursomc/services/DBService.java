@@ -25,6 +25,7 @@ import com.nelioalves.cursomc.repositories.PedidoRepository;
 import com.nelioalves.cursomc.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -61,6 +62,9 @@ public class DBService {
 
     @Autowired
     private ItemPedidoRepository itemPedidoRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     public void instantiateTestDatabase() {
         Categoria cat1 = new Categoria(null, "Informática");
@@ -123,7 +127,7 @@ public class DBService {
         estadoRepository.saveAll(Arrays.asList(est1, est2));
         cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
 
-        Cliente cli1 = new Cliente(null, "Maria Silva", "joao_cesar_pereira@hotmail.com", "36378912377", TipoCliente.PESSOAFISICA);
+        Cliente cli1 = new Cliente(null, "Maria Silva", "joao_cesar_pereira@hotmail.com", "36378912377", TipoCliente.PESSOAFISICA, encoder.encode("12345"));
         cli1.getTelefones().addAll(Arrays.asList("27363323", "993838393"));
 
         Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, cid1);

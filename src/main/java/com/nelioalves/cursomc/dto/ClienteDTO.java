@@ -57,7 +57,7 @@ public class ClienteDTO implements Serializable {
     }
 
     public Cliente toEntity() {
-        return new Cliente(this.id, this.nome, this.email, null, null);
+        return new Cliente(this.id, this.nome, this.email, null, null, null);
     }
 
 }

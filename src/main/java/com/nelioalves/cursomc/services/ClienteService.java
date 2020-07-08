@@ -1,8 +1,6 @@
 package com.nelioalves.cursomc.services;
 
 import com.nelioalves.cursomc.domain.Cliente;
-import com.nelioalves.cursomc.domain.Cliente;
-import com.nelioalves.cursomc.domain.Endereco;
 import com.nelioalves.cursomc.repositories.ClienteRepository;
 import com.nelioalves.cursomc.repositories.EnderecoRepository;
 import com.nelioalves.cursomc.services.exceptions.DataIntegrityException;
@@ -12,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +26,9 @@ public class ClienteService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     public Cliente find(Integer id) {
         Optional<Cliente> Cliente = repository.findById(id);
         return Cliente.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
@@ -34,6 +36,7 @@ public class ClienteService {
 
     @Transactional
     public Cliente insert(Cliente cliente) {
+        cliente.setSenha(encoder.encode(cliente.getSenha()));
         Cliente clienteSaved = repository.save(cliente);
         enderecoRepository.saveAll(cliente.getEnderecos());
         return clienteSaved;
