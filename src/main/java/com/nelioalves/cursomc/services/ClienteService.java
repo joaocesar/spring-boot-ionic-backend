@@ -8,7 +8,9 @@ import com.nelioalves.cursomc.security.UserSec;
 import com.nelioalves.cursomc.services.exceptions.AuthorizationException;
 import com.nelioalves.cursomc.services.exceptions.DataIntegrityException;
 import com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,12 +20,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ClienteService {
+
+    private static final String IMAGE_CONTENT_TYPE = "image";
+    private static final String IMAGE_EXTENSION = "jpg";
 
     @Autowired
     private ClienteRepository repository;
@@ -36,6 +42,12 @@ public class ClienteService {
 
     @Autowired
     private AwsS3Service s3Service;
+
+    @Autowired
+    private ImageService imageService;
+
+    @Value("${img.prefix.client.profile}")
+    private String prefix;
 
     public Cliente find(Integer id) {
         UserSec user = UserService.authenticated();
@@ -92,11 +104,14 @@ public class ClienteService {
         if (user == null) {
             throw new AuthorizationException("Acesso negado.");
         }
-        URI uri = s3Service.uploadFile(multipartFile);
-        Cliente cliente = repository.findById(user.getId()).get();
-        cliente.setImageUrl(uri.toString());
-        repository.save(cliente);
-        return uri;
+
+        BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+        StringBuilder fileName = new StringBuilder(prefix)
+                .append(user.getId())
+                .append(FilenameUtils.EXTENSION_SEPARATOR)
+                .append(IMAGE_EXTENSION);
+
+        return s3Service.uploadFile(imageService.getInputStream(jpgImage, IMAGE_EXTENSION), fileName.toString(), IMAGE_CONTENT_TYPE);
     }
     
 }
