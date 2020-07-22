@@ -16,7 +16,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +33,9 @@ public class ClienteService {
 
     @Autowired
     private BCryptPasswordEncoder encoder;
+
+    @Autowired
+    private AwsS3Service s3Service;
 
     public Cliente find(Integer id) {
         UserSec user = UserService.authenticated();
@@ -80,6 +85,10 @@ public class ClienteService {
     private void updateCliente(Cliente clienteToSave, Cliente clienteChanged) {
         clienteToSave.setNome(clienteChanged.getNome());
         clienteToSave.setEmail(clienteChanged.getEmail());
+    }
+
+    public URI uploadProfilePicture(MultipartFile multipartFile) {
+        return s3Service.uploadFile(multipartFile);
     }
     
 }
