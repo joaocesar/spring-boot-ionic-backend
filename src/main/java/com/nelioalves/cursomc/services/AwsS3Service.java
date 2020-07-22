@@ -2,6 +2,7 @@ package com.nelioalves.cursomc.services;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.nelioalves.cursomc.services.exceptions.FileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class AwsS3Service {
             String contentType = multipartFile.getContentType();
             return uploadFile(inputStream, fileName, contentType);
         } catch (IOException e) {
-            throw new RuntimeException("Erro de I/O: " + e.getMessage());
+            throw new FileException("Erro de I/O: " + e.getMessage());
         }
     }
 
@@ -45,7 +46,7 @@ public class AwsS3Service {
             LOG.info("Upload concluido");
             return amazonS3.getUrl(bucketName, filename).toURI();
         } catch (URISyntaxException e) {
-            throw new RuntimeException("Erro ao converter URL para URI");
+            throw new FileException("Erro ao converter URL para URI");
         }
     }
 }
