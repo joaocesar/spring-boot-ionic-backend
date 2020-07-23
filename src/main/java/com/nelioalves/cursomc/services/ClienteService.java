@@ -57,12 +57,8 @@ public class ClienteService {
         if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
             throw new AuthorizationException("Acesso negado.");
         }
-        Optional<Cliente> Cliente = repository.findById(id);
-        return Cliente.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
-    }
-
-    public Cliente findByEmail(String email) {
-        return repository.findByEmail(email);
+        Optional<Cliente> cliente = repository.findById(id);
+        return cliente.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
     }
 
     @Transactional
@@ -95,6 +91,15 @@ public class ClienteService {
     public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page,linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return repository.findAll(pageRequest);
+    }
+
+    public Cliente findByEmail(String email) {
+        UserSec user = UserService.authenticated();
+        if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+            throw new AuthorizationException("Acesso negado.");
+        }
+        Optional<Cliente> cliente = Optional.ofNullable(repository.findByEmail(email));
+        return cliente.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Cliente.class.getName()));
     }
 
     private void updateCliente(Cliente clienteToSave, Cliente clienteChanged) {
