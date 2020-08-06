@@ -9,8 +9,8 @@ public class BeanValidationError extends StandardError {
 
     List<FieldMessage> fieldMessages = new ArrayList<>();
 
-    public BeanValidationError(Integer status, String message, Long timestamp) {
-        super(status, message, timestamp);
+    public BeanValidationError(Long timestamp, Integer status, String error, String message, String path) {
+        super(timestamp, status, error, message, path);
     }
 
     public List<FieldMessage> getFieldMessages() {
